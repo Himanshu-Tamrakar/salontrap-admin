@@ -1,0 +1,58 @@
+<div class="container">
+  <ul class="collection with-header">
+    <li class="collection-header">
+      <h4>All Saved Locations</h4>
+    </li>
+    <li ng-repeat="object in location.allLocations" class="collection-item">
+      <div>{{object.name}}
+        <a class="secondary-content"><i ng-click="location.delete(object._id)" class="material-icons">delete_forever</i></a>
+        &emsp;&emsp;<a class="secondary-content" ng-click="location.initialize(object._id)" href="#update-location"><i class="material-icons">mode_edit</i></a>
+      </div>
+    </li>
+  </ul>
+
+  <a class="" href="#add-location"><i class="material-icons medium">add_circle</i></a>
+</div>
+<!-- Add Location Model Structure -->
+<div id="add-location" class="modal">
+  <div class="modal-content">
+    <h4>Add Operational Location</h4>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input ng-model="location.locationName" placeholder="Placeholder" id="location_name" type="text" class="validate">
+            <label for="location_name">Enter Name Of The Location</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a ng-click="location.insert()" id="download-button" class="btn-large waves-effect waves-light orange">Insert Location</a>
+  </div>
+</div>
+
+<!-- Add Location Model Structure -->
+<div id="update-location" class="modal">
+  <div class="modal-content">
+    <h4>Add Operational Location</h4>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input disabled ng-model="location.savedLocation._id" placeholder="location.savedLocation._id" id="location_id" type="text" class="validate">
+            <label for="location_id">Location Id</label>
+          </div>
+          <div class="input-field col s6">
+            <input ng-model="location.savedLocation.name" placeholder="location.savedLocation.name" id="location_name" type="text" class="validate">
+            <label for="location_name">Edit Name Of The Location</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a ng-click="location.update()" id="download-button" class="btn-large waves-effect waves-light orange">Update Location</a>
+  </div>
+</div>
