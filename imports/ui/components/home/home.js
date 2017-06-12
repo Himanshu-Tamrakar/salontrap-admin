@@ -7,6 +7,7 @@ import {
     Meteor
 } from 'meteor/meteor';
 import {name as Location} from '../location/location'
+import {name as Service} from '../service/service'
 
 
 class Home {
@@ -31,7 +32,8 @@ export default angular.module(name, [
   angularMeteor,
   uiRouter,
   ngMaterial,
-  Location
+  Location,
+  Service
 ]).component(name, {
   template,
   controllerAs: name,
