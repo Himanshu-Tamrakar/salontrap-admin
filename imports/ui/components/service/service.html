@@ -1,0 +1,58 @@
+<div class="container">
+  <ul class="collection with-header">
+    <li class="collection-header">
+      <h4>All Saved Services</h4>
+    </li>
+    <li ng-repeat="object in service.allServices" class="collection-item">
+      <div>{{object.name}}
+        <a class="secondary-content"><i ng-click="service.delete(object._id)" class="material-icons">delete_forever</i></a>
+        &emsp;&emsp;<a class="secondary-content" ng-click="service.initialize(object)" href="#update-service"><i class="material-icons">mode_edit</i></a>
+      </div>
+    </li>
+  </ul>
+  <a class="" href="#add-service"><i class="material-icons medium">add_circle</i></a>
+</div>
+
+<!-- Add Service Model Structure -->
+<div id="add-service" class="modal">
+  <div class="modal-content">
+    <h4>Add Operational Location</h4>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input ng-model="service.serviceName" placeholder="Placeholder" id="service_name" type="text" class="validate">
+            <label for="service_name">Enter Service Name</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a ng-click="service.insert()" id="download-button" class="btn-large waves-effect waves-light orange">Insert Location</a>
+  </div>
+</div>
+
+<!-- Update Service Model Structure -->
+<div id="update-service" class="modal">
+  <div class="modal-content">
+    <h4>Add Operational Location</h4>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input disabled ng-model="service.savedService._id" placeholder="service.savedService._id" id="service_id" type="text" class="validate">
+            <label for="service_id">Location Id</label>
+          </div>
+          <div class="input-field col s6">
+            <input ng-model="service.savedService.name" placeholder="service.savedService.name" id="service_name" type="text" class="validate">
+            <label for="service_name">Edit Name Of The Location</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a ng-click="service.update()" id="download-button" class="btn-large waves-effect waves-light orange">Update Location</a>
+  </div>
+</div>
