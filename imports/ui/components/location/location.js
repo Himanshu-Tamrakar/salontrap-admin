@@ -84,13 +84,9 @@ class Location {
     }
   }
 
-  initialize(id) {
-    const object = Locations.findOne({
-      '_id': id
-    });
-
-    this.savedLocation._id = object._id
-    this.savedLocation.name = object.name
+  initialize(location) {
+    this.savedLocation._id = location._id
+    this.savedLocation.name = location.name
   }
   update() {
     Locations.update({
