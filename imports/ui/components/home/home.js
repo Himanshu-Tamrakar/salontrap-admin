@@ -4,10 +4,19 @@ import template from './home.html';
 import uiRouter from '@uirouter/angularjs';
 import ngMaterial from 'angular-material';
 import {
-    Meteor
+  Meteor
 } from 'meteor/meteor';
-import {name as Location} from '../location/location'
-import {name as Service} from '../service/service'
+import {
+  name as Location
+} from '../location/location'
+import {
+  name as Service
+} from '../service/service'
+import {
+  name as Salon
+} from '../salon/salon'
+
+
 
 
 class Home {
@@ -33,7 +42,8 @@ export default angular.module(name, [
   uiRouter,
   ngMaterial,
   Location,
-  Service
+  Service,
+  Salon
 ]).component(name, {
   template,
   controllerAs: name,
