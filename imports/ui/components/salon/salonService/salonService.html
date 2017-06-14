@@ -29,7 +29,7 @@
   <div class="input-field col s12">
     <select ng-model="salonService.selectedItems.service">
       <option value="" disabled selected>Choose your option</option>
-      <option ng-repeat="service in salonService.allServices" ng-init="$last && atNgRepeatFinish()" value="{{service}}">{{service.name}}</option>
+      <option ng-repeat="service in salonService.shopServices" ng-init="$last && atNgRepeatFinish()" value="{{service}}">{{service.name}}</option>
     </select>
     <label>Materialize Select</label>
   </div>

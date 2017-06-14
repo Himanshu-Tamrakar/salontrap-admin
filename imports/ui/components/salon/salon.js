@@ -222,31 +222,31 @@ class Salon {
     // console.log(this.salonDetails);
     console.log(this.shopToBeUpdate);
 
-    // Shops.update({
-    //   '_id': this.shopToBeUpdate
-    // }, {
-    //   $set: {
-    //     'name': this.salonDetails.name,
-    //     'serviceId': this.salonDetails.serviceId,
-    //     'type': this.salonDetails.type,
-    //     'description': this.salonDetails.description,
-    //     'location': this.salonDetails.location,
-    //     'images': this.salonDetails.images,
-    //     'openingHours': this.salonDetails.openingHours,
-    //     'amenities': this.salonDetails.amenities,
-    //     'price': this.salonDetails.price,
-    //     'paymentModes': this.salonDetails.paymentModes,
-    //     'createdAt': this.salonDetails.createdAt,
-    //     'updatedAt': this.salonDetails.updatedAt,
-    //     'services': this.salonDetails.services
-    //   }
-    // }, function(error) {
-    //   if (error) {
-    //     alert("update fails");
-    //   } else {
-    //     alert("updated")
-    //   }
-    // })
+    Shops.update({
+      '_id': this.shopToBeUpdate
+    }, {
+      $set: {
+        'name': this.salonDetails.name,
+        'serviceId': this.salonDetails.serviceId,
+        'type': this.salonDetails.type,
+        'description': this.salonDetails.description,
+        'location': this.salonDetails.location,
+        'images': this.salonDetails.images,
+        'openingHours': this.salonDetails.openingHours,
+        'amenities': this.salonDetails.amenities,
+        'price': this.salonDetails.price,
+        'paymentModes': this.salonDetails.paymentModes,
+        'createdAt': this.salonDetails.createdAt,
+        'updatedAt': this.salonDetails.updatedAt,
+        'services': this.salonDetails.services
+      }
+    }, function(error) {
+      if (error) {
+        alert("update fails");
+      } else {
+        alert("updated")
+      }
+    })
   }
 
 
@@ -270,6 +270,16 @@ function config($stateProvider) {
   'ngInject';
   $stateProvider.state('salon', {
     url: '/salon',
-    template: '<salon></salon>'
+    template: '<salon></salon>',
+    resolve: {
+      currentUser($q, $state) {
+        if (Meteor.userId() === null) {
+          $state.go('login')
+        } else {
+          // $state.go('home')
+          return $q.resolve();
+        }
+      }
+    }
   });
 }

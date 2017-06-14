@@ -68,17 +68,18 @@ class SalonService {
     console.log($stateParams.serviceId);
 
     this.helpers({
-      allServices() {
-        return Services.find({})
+      shopServices() {
+        const shop = Shops.findOne({'_id' : $stateParams.shopId})
+        if(shop) {
+          return shop.services;
+        }
       },
       AllShopServices() {
         const object = ShopServices.findOne({
           '_id': $stateParams.serviceId
         })
         if (object) {
-          return ShopServices.findOne({
-            '_id': $stateParams.serviceId
-          }).services;
+          return object.services;
         }
       }
     })
