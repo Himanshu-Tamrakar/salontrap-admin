@@ -13,6 +13,9 @@ import {
 import {
   ShopServices
 } from '../../../../api/shopServices'
+import {
+  Services
+} from '../../../../api/services'
 
 
 
@@ -27,52 +30,130 @@ class SalonService {
     this.state = $state;
     this.stateParams = $stateParams
 
+    this.documentNeedToUpdate = null;
+
+    this.selectedItems = {
+      'service': null,
+      'serviceId': null,
+      'serviceName': null,
+      'subServiceName': null,
+      'price': null,
+      'discount': null
+    }
+
+
+
+    $scope.atNgRepeatFinish = function() {
+      $timeout(function() {
+        $(document).ready(function() {
+          $('select').material_select();
+        });
+      }, 10);
+    }
+
+    $timeout(function() {
+
+      $(document).ready(function() {
+        $('select').material_select();
+      });
+
+      $(document).ready(function() {
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+      });
+
+
+    }, 10);
+
     console.log($stateParams.serviceId);
 
     this.helpers({
-      salonAllDetails() {
-        var salonAllDetails = []
-
-        const shop = Shops.findOne({
-          '_id': $stateParams.shopId
-        })
-        const services = ShopServices.findOne({
+      allServices() {
+        return Services.find({})
+      },
+      AllShopServices() {
+        const object = ShopServices.findOne({
           '_id': $stateParams.serviceId
         })
-
-        if (shop && services) {
-          salonAllDetails.push({
-            'salon': shop,
-            'salonServices': services
-          })
+        if (object) {
+          return ShopServices.findOne({
+            '_id': $stateParams.serviceId
+          }).services;
         }
-
-        return salonAllDetails;
-
       }
     })
 
 
   }
 
-  save(serviceId, subServiceId) {
-    console.log(serviceId + " " + subServiceId);
-    temp = {'a': subServiceId}
+
+  initialize(object) {
+    console.log(object);
+    this.documentNeedToUpdate = object
+    this.selectedItems.serviceId = object.serviceId
+    this.selectedItems.serviceName = object.serviceName
+    this.selectedItems.subServiceName = object.subServiceName
+    this.selectedItems.price = object.price
+    this.selectedItems.discount = object.discount
+
+  }
+
+  update() {
+    $stateParams = this.stateParams;
+    console.log(this.documentNeedToUpdate);
+    Meteor.call('updateSubservice', $stateParams.serviceId, this.documentNeedToUpdate, this.selectedItems)
+  }
+
+  save() {
+    $stateParams = this.stateParams
+
+    const serviceId = JSON.parse(this.selectedItems.service)._id
+    const serviceName = JSON.parse(this.selectedItems.service).name
+
+    var object = {
+      'serviceId': serviceId,
+      'serviceName': serviceName,
+      'subServiceName': this.selectedItems.subServiceName,
+      'price': this.selectedItems.price,
+      'discount': this.selectedItems.discount
+    }
     ShopServices.update({
-      '_id': serviceId
+      '_id': $stateParams.serviceId
     }, {
       $addToSet: {
-        subServiceId: {
-          'name': "ttimeout",
-          'price': '1000',
-          'discount': '10'
+        'services': object
+      }
+    }, function(error) {
+      if (error) {
+        console.log(error);
+      } else {
+        $("select").val("");
+        $("input").val(null);
+        $('select').material_select();
+        console.log("inserted successfully");
+      }
+    })
+  }
+
+  delete(object) {
+    $stateParams = this.stateParams
+    ShopServices.update({
+      '_id': $stateParams.serviceId
+    }, {
+      $pull: {
+        "services": {
+          "serviceId": object.serviceId,
+          "serviceName": object.serviceName,
+          "subServiceName": object.subServiceName,
+          "price": object.price,
+          "discount": object.discount
         }
       }
-    },function(error) {
-      if(error) {
-        console.log("not");
+    }, function(error) {
+      if (error) {
+        console.log("not remove");
       } else {
-        console.log("inserted");
+        console.log("removed");
       }
     })
   }

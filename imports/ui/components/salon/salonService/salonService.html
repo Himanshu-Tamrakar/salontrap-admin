@@ -1,36 +1,91 @@
-<div ng-repeat="object in salonService.salonAllDetails" class="">
-  <div ng-repeat="obj in object.salon.services" class="card" style="width:600px; height:400px">
-    <div class="card waves-effect waves-block waves-light">
-      <p>{{obj.name}}</p>
-      <p ng-repeat="subservice in object.salonServices[obj._id]">{{subservice.name}}&emsp;&emsp;{{sebservice.price}}&emsp;&emsp;{{sebservice.discount}}</p>
-    </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-      <p><a href="#">This is a link</a></p>
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+<div class="container" style="margin-top:30px;">
+  <!-- //First Row -->
+  <table>
+    <thead>
+      <tr>
+        <th>ServiceId</th>
+        <th>ServiceName</th>
+        <th>SubServiceName</th>
+        <th>Price</th>
+        <th>Discount</th>
+        <th>Operation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="object in salonService.AllShopServices">
+        <td>{{object.serviceId}}</td>
+        <td>{{object.serviceName}}</td>
+        <td>{{object.subServiceName}}</td>
+        <td>{{object.price}}</td>
+        <td>{{object.discount}}</td>
+        <td>
+          <a class="right" style="margin-right:10px;"><i ng-click="salonService.delete(object)" class="center material-icons">delete_forever</i></a>
+          <a class="right" style="margin-right:10px;" ng-click="salonService.initialize(object)" href="#update-service"><i class="center material-icons">mode_edit</i></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- //Second row -->
+  <div class="input-field col s12">
+    <select ng-model="salonService.selectedItems.service">
+      <option value="" disabled selected>Choose your option</option>
+      <option ng-repeat="service in salonService.allServices" ng-init="$last && atNgRepeatFinish()" value="{{service}}">{{service.name}}</option>
+    </select>
+    <label>Materialize Select</label>
+  </div>
+  <div class="row">
+    <form class="col s12">
       <div class="row">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s12">
-              <input placeholder="Placeholder" id="sub_service_name" type="text" class="validate">
-              <label for="sub_service_name">Sub Service Name</label>
-            </div>
-            <div class="input-field col s6">
-              <input id="price" type="text" class="validate">
-              <label for="price">Price</label>
-            </div>
-            <div class="input-field col s6">
-              <input id="discount" type="text" class="validate">
-              <label for="discount">Discount</label>
-            </div>
-          </div>
-          <div class="row">
-            <a ng-click="salonService.save(object.salonServices._id, obj._id)" style="margin-right:10p" class="center btn-large orange">Save Sub Service In</a>
-          </div>
-        </form>
+        <div class="input-field col s12">
+          <input ng-model="salonService.selectedItems.subServiceName" placeholder="Placeholder" id="sub_service_name" type="text" class="validate">
+          <label for="sub_service_name">SubService Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input ng-model="salonService.selectedItems.price" placeholder="Placeholder" id="price_name" type="text" class="validate">
+          <label class="active" for="price">Price</label>
+        </div>
+        <div class="input-field col s6">
+          <input ng-model="salonService.selectedItems.discount" placeholder="Placeholder" id="discount" type="text" class="validate">
+          <label class="actve" for="discount">Discount</label>
+        </div>
       </div>
-    </div>
+
+      <div class="center modal-footer">
+        <a ng-click="salonService.save()" id="download-button" class="btn-large center orange">Insert Sub Service</a>
+      </div>
+
+    </form>
   </div>
 </div>
+
+<div id="update-service" class="modal">
+  <div class="modal-content">
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input disabled ng-model="salonService.selectedItems.serviceId" placeholder="{{salonService.selectedItems.serviceId}}" id="serviceId" type="text" class="validate">
+            <label class="active" for="serviceId">Service ID</label>
+          </div>
+          <div class="input-field col s6">
+            <input disabled ng-model="salonService.selectedItems.serviceName" placeholder="{{salonService.selectedItems.serviceName}}" id="service_name" type="text" class="validate">
+            <label class="active" for="service_name">Service Name</label>
+          </div>
+          <div class="input-field col s12">
+            <input ng-model="salonService.selectedItems.subServiceName" placeholder="{{salonService.selectedItems.subServiceName}}" id="sub_service_name" type="text" class="validate">
+            <label class="active" for="sub_service_name">Update SubService Name</label>
+          </div>
+          <div class="input-field col s6">
+            <input ng-model="salonService.selectedItems.price" placeholder="{{salonService.selectedItems.price}}" id="price" type="text" class="validate">
+            <label class="active" for="price">Update Price</label>
+          </div>
+          <div class="input-field col s6">
+            <input ng-model="salonService.selectedItems.discount" placeholder="{{salonService.selectedItems.discount}}" id="discount" type="text" class="validate">
+            <label class="active" for="discount">Update Discount</label>
+          </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <a ng-click="salonService.update()" class="modal-action modal-close waves-effect waves-green btn-flat">update</a>
+    </div>
+  </div>
