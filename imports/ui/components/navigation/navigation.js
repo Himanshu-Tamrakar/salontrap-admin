@@ -3,7 +3,9 @@ import angularMeteor from 'angular-meteor';
 import ngMaterial from 'angular-material';
 import uiRouter from '@uirouter/angularjs';
 import template from './navigation.html';
-
+import {
+  Meteor
+} from 'meteor/meteor';
 
 
 class Navigation {
@@ -21,6 +23,15 @@ class Navigation {
 
   }
 
+  logout() {
+    $state = this.state;
+    Meteor.logout(function(error) {
+      if(!error) {
+        $state.go('login')
+        alert("userlogged OUt");
+      }
+    });
+  }
 }
 
 const name = 'navigation';
