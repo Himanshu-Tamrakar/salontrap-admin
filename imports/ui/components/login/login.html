@@ -1,0 +1,23 @@
+<div class="container">
+    <p style="font-size: xx-large;text-align: center">YourMarch</p>
+    <div class="row">
+        <div class="input-field col s10 m6 offset-m3 offset-s1">
+            <input id="username" ng-model="login.username" type="text" class="validate">
+            <label for="username">Username</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s10 m6 offset-m3 offset-s1">
+            <input id="password" ng-model="login.password" type="password" class="validate">
+            <label for="password">Password</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col center s12">
+            <a class="waves-effect waves-light center btn" ng-click="login.signIn()">
+                <i class="material-icons right">arrow_forward</i>
+                Login
+            </a>
+        </div>
+    </div>
+</div>
