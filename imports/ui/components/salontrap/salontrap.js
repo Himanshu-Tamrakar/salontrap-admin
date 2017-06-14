@@ -5,18 +5,21 @@ import ngMaterial from 'angular-material';
 import uiRouter from '@uirouter/angularjs';
 import template from './salontrap.html';
 import {
-    Meteor
+  Meteor
 } from 'meteor/meteor';
 
 import {
   name as Navigation
 } from '../navigation/navigation';
+// import {
+//   name as Home
+// } from '../home/home';
 import {
-  name as Home
-} from '../home/home';
+  name as Login
+} from '../login/login';
 
 class SalonTrap {
-  constructor($scope, $reactive, $rootScope, $timeout, $state, $interval) {
+  constructor($scope, $reactive, $rootScope, $timeout, $state, $interval, $q) {
 
     'ngInject';
     $reactive(this).attach($scope);
@@ -34,22 +37,40 @@ export default angular.module(name, [
   uiRouter,
   ngMaterial,
   Navigation,
-  Home
+  // Home,
+  Login
 ]).component(name, {
   template,
   controllerAs: name,
   controller: SalonTrap
-}).config(config);
+}).config(config).run(run);
 
-function config($locationProvider, $urlRouterProvider, $stateProvider) {
+function config($locationProvider, $urlRouterProvider, $stateProvider, $qProvider) {
   'ngInject';
 
   $stateProvider.state('salontrap', {
-      abstract: true,
-      template: '<salontrap></salontrap>'
+    abstract: true,
+    template: '<salontrap></salontrap>'
   });
 
   $locationProvider.html5Mode(true);
 
-  $urlRouterProvider.otherwise('/home');
+  $urlRouterProvider.otherwise('/login');
+
+  $qProvider.errorOnUnhandledRejections(false);
+}
+
+function run($rootScope, $state, $q) {
+  'ngInject';
+
+  $rootScope.$on('$stateChangeError',
+    (event, toState, toParams, fromState, fromParams, error) => {
+      if (error === 'AUTH_REQUIRED') {
+        alert("sd")
+        $state.go('login');
+      } else {
+        $state.go('login');
+      }
+    }
+  );
 }
