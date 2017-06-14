@@ -19,6 +19,5 @@ autopublish@1.0.7             # Publish all data to the clients (for prototyping
 pbastowski:angular-babel
 urigo:static-templates
 materialize:materialize
-accounts-facebook
-service-configuration
 random
+accounts-password
