@@ -1,0 +1,36 @@
+<div ng-repeat="object in salonService.salonAllDetails" class="">
+  <div ng-repeat="obj in object.salon.services" class="card" style="width:600px; height:400px">
+    <div class="card waves-effect waves-block waves-light">
+      <p>{{obj.name}}</p>
+      <p ng-repeat="subservice in object.salonServices[obj._id]">{{subservice.name}}&emsp;&emsp;{{sebservice.price}}&emsp;&emsp;{{sebservice.discount}}</p>
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
+      <p><a href="#">This is a link</a></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input placeholder="Placeholder" id="sub_service_name" type="text" class="validate">
+              <label for="sub_service_name">Sub Service Name</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="price" type="text" class="validate">
+              <label for="price">Price</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="discount" type="text" class="validate">
+              <label for="discount">Discount</label>
+            </div>
+          </div>
+          <div class="row">
+            <a ng-click="salonService.save(object.salonServices._id, obj._id)" style="margin-right:10p" class="center btn-large orange">Save Sub Service In</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
