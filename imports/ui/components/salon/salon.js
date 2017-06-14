@@ -18,7 +18,9 @@ import {
 import {
   ShopServices
 } from '../../../api/shopServices'
-import {name as SalonService} from './salonService/salonService'
+import {
+  name as SalonService
+} from './salonService/salonService'
 
 
 
@@ -31,6 +33,8 @@ class Salon {
     this.scope = $scope;
     this.timeout = $timeout;
     this.state = $state;
+
+    this.shopToBeUpdate = null;
 
 
     this.salonDetails = {
@@ -126,14 +130,9 @@ class Salon {
             var object = {}
 
             object['shopId'] = result;
+            object['services'] = [];
             object['createdAt'] = new Date();
             object['updatedAt'] = new Date();
-            Shops.findOne({
-              '_id': result
-            }).services.forEach(function(obj) {
-              var temp = obj._id
-              object[temp] = []
-            })
 
             ShopServices.insert(object, function(error, result) {
               if (error) {
@@ -147,8 +146,8 @@ class Salon {
                   $set: {
                     'serviceId': result
                   }
-                },function(error) {
-                  if(!error) {
+                }, function(error) {
+                  if (!error) {
 
                   }
                 })
@@ -171,20 +170,23 @@ class Salon {
         if (error) {
           // alert("deleter error")
         } else {
-          ShopServices.remove({'_id':serviceId}, function(error) {
-            if(error) {
+          ShopServices.remove({
+              '_id': serviceId
+            }, function(error) {
+              if (error) {
 
-            } else {
+              } else {
 
-            }
-          })
-          // alert("deleted Successfully")
+              }
+            })
+            // alert("deleted Successfully")
         }
       })
     }
   }
 
   initialize(shop) {
+    this.shopToBeUpdate = shop._id;
     this.salonDetails = {
       'name': shop.name,
       'serviceId': shop.serviceId,
@@ -202,14 +204,44 @@ class Salon {
     }
   }
   update() {
-    // Locations.update({
-    //   '_id': this.savedLocation._id
+
+    console.log(this.salonDetails);
+    $timeout = this.timeout;
+    $state = this.state;
+    var selectedService = []
+    var selectedLocation = {}
+
+    $("#service :selected").each(function() {
+      selectedService.push(JSON.parse($(this).val()));
+    });
+    selectedLocation = JSON.parse(document.getElementById('location-select').value);
+
+    this.salonDetails.services = selectedService;
+    this.salonDetails.location = selectedLocation
+
+    // console.log(this.salonDetails);
+    console.log(this.shopToBeUpdate);
+
+    // Shops.update({
+    //   '_id': this.shopToBeUpdate
     // }, {
     //   $set: {
-    //     'name': this.savedLocation.name
+    //     'name': this.salonDetails.name,
+    //     'serviceId': this.salonDetails.serviceId,
+    //     'type': this.salonDetails.type,
+    //     'description': this.salonDetails.description,
+    //     'location': this.salonDetails.location,
+    //     'images': this.salonDetails.images,
+    //     'openingHours': this.salonDetails.openingHours,
+    //     'amenities': this.salonDetails.amenities,
+    //     'price': this.salonDetails.price,
+    //     'paymentModes': this.salonDetails.paymentModes,
+    //     'createdAt': this.salonDetails.createdAt,
+    //     'updatedAt': this.salonDetails.updatedAt,
+    //     'services': this.salonDetails.services
     //   }
-    // },function(error) {
-    //   if(error) {
+    // }, function(error) {
+    //   if (error) {
     //     alert("update fails");
     //   } else {
     //     alert("updated")
