@@ -6,6 +6,9 @@ import template from './navigation.html';
 import {
   Meteor
 } from 'meteor/meteor';
+import {
+  name as Profile
+} from '../profile/profile'
 
 
 class Navigation {
@@ -26,7 +29,7 @@ class Navigation {
   logout() {
     $state = this.state;
     Meteor.logout(function(error) {
-      if(!error) {
+      if (!error) {
         $state.go('login')
         alert("userlogged OUt");
       }
@@ -40,7 +43,8 @@ const name = 'navigation';
 export default angular.module(name, [
   angularMeteor,
   ngMaterial,
-  uiRouter
+  uiRouter,
+  Profile
 ]).component(name, {
   template,
   controllerAs: name,
