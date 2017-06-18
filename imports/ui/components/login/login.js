@@ -59,11 +59,10 @@ function config($stateProvider) {
     resolve: {
       currentUser($q, $state) {
         if (Meteor.userId() === null) {
-
           return $q.resolve();
         } else {
-          // $state.go('home')
-          return $q.resolve();
+          $state.go('home')
+          $q.reject();
         }
       }
     }
