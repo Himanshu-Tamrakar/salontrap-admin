@@ -1,0 +1,28 @@
+
+<div id="test2" class="col s12">
+  <ul class="collection">
+      <li ng-repeat="booking in profile.bookings" class="collection-item">
+        <b>ShopName :</b> <span>{{salonIdToSalonName(booking.salonId).name}}</span>
+        <span ng-if="booking.isCancel && !booking.markAsComplete" class="right new badge red" data-badge-caption="Cancelled">{{booking.cancelBy}}</span><br>
+        <span ng-if="booking.markAsComplete" class="right new badge green" data-badge-caption="Completed">Booking</span><br>
+        <br>
+        <b>User :</b> <span>{{getUserName(booking.userId)}}</span><br>
+        <b>Services Booked : </b><p ng-repeat="obj in booking.selectedItemsObject">{{obj.serviceName}}-{{obj.subServiceName}}</p>
+        <br>
+        <b>Payable Amount :</b> <span>{{booking.price}}</span>
+        <br>
+        <b>Date :</b> <span>{{booking.bookingDate}}</span>
+        <br>
+        <b>Time :</b> <span>{{booking.bookingTime}}</span>
+        <div class="row">
+          <div ng-if="!booking.markAsComplete" href="" class="col s6 right">
+            <a ng-if="!booking.isCancel" ng-click="profile.cancelBooking(booking._id)" id="download-button" class="btn right waves-effect waves-light">Cancel Booking</a>
+          </div>
+           <div ng-if="!booking.markAsComplete" class="col s6 left">
+            <a ng-if="!booking.isCancel" ng-click="profile.markAsComplete(booking._id)" id="download-button" class="btn waves-effect waves-light">Mark Booking As Completed</a>
+          </div>
+        </div>
+
+      </li>
+  </ul>
+</div>
