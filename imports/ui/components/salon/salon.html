@@ -11,7 +11,7 @@
       <!-- <th>Amenities</th> -->
       <!-- <th>Price</th> -->
       <!-- <th>PaymentModes</th> -->
-      <th>Services</th>
+      <!-- <th>Services</th> -->
       <th>Operation</yh>
     </tr>
   </thead>
@@ -39,16 +39,16 @@
           </select>
         </div>
       </td> -->
-      <td>
+      <!-- <td>
         <div class="input-field">
           <select>
             <option ng-repeat="service in object.services">{{service.name}}</option>
           </select>
         </div>
-      </td>
+      </td> -->
       <td>
         <a ui-sref="salonService({ 'shopId':object._id, 'serviceId':object.serviceId})" class="right" style="margin-right:10px;"><i class="material-icons">playlist_add</i></a>
-        <!-- <a class="right" style="margin-right:10px;" ng-click="salon.initialize(object)" href="#update-shop"><i class="material-icons">mode_edit</i></a> -->
+        <a class="right" style="margin-right:10px;" ng-click="salon.initialize(object)" href="#update-shop"><i class="material-icons">mode_edit</i></a>
         <a class="right" style="margin-right:10px;"><i ng-click="salon.delete(object._id, object.serviceId)" class="material-icons">delete_forever</i></a>
       </td>
     </tr>
@@ -78,8 +78,8 @@
           </select>
         </div>
         <div class="input-field col s12">
-          <textarea ng-model="salon.salonDetails.description" id="textarea1" class="materialize-textarea" data-length="60"></textarea>
-          <label for="textarea1">Textarea</label>
+          <textarea ng-model="salon.salonDetails.images" id="images" class="materialize-textarea"></textarea>
+          <label for="images">Enter Image URL coma colan saparated</label>
         </div>
         <div class="input-field col s6">
           <select ng-model="salon.salonDetails.location" id="location-select">
@@ -122,6 +122,14 @@
             <option disabled selected>Choose Services</option>
             <option ng-init="$last && atNgRepeatFinish()" ng-repeat="service in salon.allServices" value="{{service}}">{{service.name}}</option>
           </select>
+        </div>
+        <div class="input-field col s6">
+          <input ng-model="salon.salonDetails.mobile" placeholder="Enter 10 digit phone number" id="salon_owner_mobile" type="tel" class="validate">
+          <label class="active" for="salon_owner_mobile">Enter The Salon Contact Person</label>
+        </div>
+        <div class="input-field col s6">
+          <input ng-model="salon.salonDetails.email" placeholder="Enter Email" id="salon_owner_email" type="email" class="validate">
+          <label class="active" for="salon_owner_email" data-error="wrong" data-success="right">Enter The Salon Contact Email</label>
         </div>
       </form>
     </div>
@@ -143,19 +151,19 @@
         </div>
         <div class="input-field col s6">
           <select ng-model="salon.salonDetails.type">
-                <option value="" disabled selected>Choose your option</option>
+                <option disabled selected>Choose your option</option>
                 <option value="UNISEX">UNISEX</option>
                 <option value="MEN ONLY">MEN ONLY</option>
                 <option value="WOMEN ONLY">WOMEN ONLY</option>
           </select>
         </div>
         <div class="input-field col s12">
-          <textarea ng-model="salon.salonDetails.description" id="textarea1" class="materialize-textarea" data-length="60"></textarea>
-          <label for="textarea1">Textarea</label>
+          <textarea ng-model="salon.salonDetails.images" id="images" class="materialize-textarea"></textarea>
+          <label for="images">Enter Image URL coma colan saparated</label>
         </div>
         <div class="input-field col s6">
           <select ng-model="salon.salonDetails.location" id="location-select">
-            <option value="" disabled selected>Choose A Location</option>
+            <option disabled selected>Choose A Location</option>
             <option ng-repeat="location in salon.allLocations" value="{{location}}">{{location.name}}</option>
           </select>
         </div>
@@ -165,7 +173,7 @@
         </div>
         <div class="input-field col s6">
           <select multiple ng-model="salon.salonDetails.amenities">
-            <option value="" disabled selected>Choose Amenities</option>
+            <option disabled selected>Choose Amenities</option>
             <option value="TV">TV</option>
             <option value="AC">AC</option>
             <option value="WIFI">WIFI</option>
@@ -174,7 +182,7 @@
         </div>
         <div class="input-field col s6">
           <select ng-model="salon.salonDetails.price">
-            <option value="" disabled selected>Choose Minimum Price</option>
+            <option disabled selected>Choose Minimum Price</option>
             <option value="1">Single Digit</option>
             <option value="2">Double Digit</option>
             <option value="3">Triple Digit</option>
@@ -184,7 +192,7 @@
         </div>
         <div class="input-field col s6">
           <select multiple ng-model="salon.salonDetails.paymentModes">
-            <option value="" disabled selected>Choose Payment Option</option>
+            <option disabled selected>Choose Payment Option</option>
             <option value="CARD">Card</option>
             <option value="CASH">Cash</option>
           </select>
@@ -194,6 +202,14 @@
             <option disabled selected>Choose Services</option>
             <option ng-init="$last && atNgRepeatFinish()" ng-repeat="service in salon.allServices" value="{{service}}">{{service.name}}</option>
           </select>
+        </div>
+        <div class="input-field col s6">
+          <input ng-model="salon.salonDetails.mobile" placeholder="Enter 10 digit phone number" id="salon_owner_mobile" type="tel" class="validate">
+          <label class="active" for="salon_owner_mobile">Enter The Salon Contact Person</label>
+        </div>
+        <div class="input-field col s6">
+          <input ng-model="salon.salonDetails.email" placeholder="Enter Email" id="salon_owner_email" type="email" class="validate">
+          <label class="active" for="salon_owner_email" data-error="wrong" data-success="right">Enter The Salon Contact Email</label>
         </div>
       </form>
     </div>

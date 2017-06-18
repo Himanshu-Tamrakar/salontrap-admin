@@ -41,16 +41,17 @@ class Salon {
       'name': null,
       'serviceId': null,
       'type': null,
-      'description': null,
       'location': {},
-      'images': [],
+      'images': null,
       'openingHours': null,
       'amenities': [],
       'price': null,
       'paymentModes': [],
       'createdAt': null,
       'updatedAt': null,
-      'services': []
+      'services': [],
+      'mobile':null,
+      'email':null
     }
 
     $scope.atNgRepeatFinish = function() {
@@ -76,7 +77,7 @@ class Salon {
       });
 
       $(document).ready(function() {
-        $('input#input_text, textarea#textarea1').characterCounter();
+        $('input#input_text, textarea#textarea1').characterCounter()
       });
 
     }, 100);
@@ -100,6 +101,8 @@ class Salon {
   insert() {
     $timeout = this.timeout;
     $state = this.state;
+
+
     var selectedService = []
     var selectedLocation = {}
 
@@ -110,12 +113,11 @@ class Salon {
 
     this.salonDetails.services = selectedService;
     this.salonDetails.location = selectedLocation
-
-    console.log(this.salonDetails.location._id)
-    console.log(this.salonDetails.images.length);
-    console.log(this.salonDetails.services.length);
-    // parseInt(this.salonDetails.images.length) > 0
-    if (this.salonDetails.name && this.salonDetails.type && this.salonDetails.description && this.salonDetails.location._id && this.salonDetails.openingHours && this.salonDetails.amenities.length > 0 && this.salonDetails.price && this.salonDetails.paymentModes.length > 0 && this.salonDetails.services.length > 0) {
+    var arrOfImages = this.salonDetails.images.split(",").map(function(item) {
+      return item.trim();
+    })
+    this.salonDetails.images = arrOfImages;
+    if (this.salonDetails.name && this.salonDetails.type && this.salonDetails.location._id && this.salonDetails.openingHours && this.salonDetails.amenities.length > 0 && this.salonDetails.price && this.salonDetails.paymentModes.length > 0 && this.salonDetails.services.length > 0) {
       Shops.insert(this.salonDetails,
         function(error, result) {
           if (error) {
@@ -158,7 +160,7 @@ class Salon {
           }
         })
     } else {
-      alert("Please enter some Location")
+      alert("Please Fill The all required fields")
     }
   }
 
@@ -176,7 +178,7 @@ class Salon {
               if (error) {
 
               } else {
-
+                alert("related subservices deleted")
               }
             })
             // alert("deleted Successfully")
@@ -200,53 +202,38 @@ class Salon {
       'paymentModes': shop.paymentModes,
       'createdAt': shop.createdAt,
       'updatedAt': shop.updatedAt,
-      'services': shop.services
+      'services': shop.services,
+      'mobile':shop.mobile,
+      'email':shop.email
     }
   }
-  update() {
 
+  update() {
     console.log(this.salonDetails);
     $timeout = this.timeout;
     $state = this.state;
     var selectedService = []
-    var selectedLocation = {}
+    var selectedLocation = null
 
     $("#service :selected").each(function() {
       selectedService.push(JSON.parse($(this).val()));
     });
     selectedLocation = JSON.parse(document.getElementById('location-select').value);
-
-    this.salonDetails.services = selectedService;
     this.salonDetails.location = selectedLocation
+    this.salonDetails.services = selectedService;
 
-    // console.log(this.salonDetails);
-    console.log(this.shopToBeUpdate);
 
-    Shops.update({
-      '_id': this.shopToBeUpdate
-    }, {
-      $set: {
-        'name': this.salonDetails.name,
-        'serviceId': this.salonDetails.serviceId,
-        'type': this.salonDetails.type,
-        'description': this.salonDetails.description,
-        'location': this.salonDetails.location,
-        'images': this.salonDetails.images,
-        'openingHours': this.salonDetails.openingHours,
-        'amenities': this.salonDetails.amenities,
-        'price': this.salonDetails.price,
-        'paymentModes': this.salonDetails.paymentModes,
-        'createdAt': this.salonDetails.createdAt,
-        'updatedAt': this.salonDetails.updatedAt,
-        'services': this.salonDetails.services
-      }
-    }, function(error) {
-      if (error) {
-        alert("update fails");
-      } else {
-        alert("updated")
-      }
-    })
+    // Shops.update({
+    //   '_id': this.shopToBeUpdate
+    // }, {
+    //   $set: this.salonDetails
+    // }, function(error) {
+    //   if (error) {
+    //     alert("update fails");
+    //   } else {
+    //     alert("updated")
+    //   }
+    // })
   }
 
 

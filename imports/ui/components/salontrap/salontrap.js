@@ -11,9 +11,7 @@ import {
 import {
   name as Navigation
 } from '../navigation/navigation';
-// import {
-//   name as Home
-// } from '../home/home';
+
 import {
   name as Login
 } from '../login/login';
@@ -66,9 +64,6 @@ function run($rootScope, $state, $q) {
   $rootScope.$on('$stateChangeError',
     (event, toState, toParams, fromState, fromParams, error) => {
       if (error === 'AUTH_REQUIRED') {
-        alert("sd")
-        $state.go('login');
-      } else {
         $state.go('login');
       }
     }
