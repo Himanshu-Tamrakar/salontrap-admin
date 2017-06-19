@@ -2,13 +2,14 @@
 <div id="test2" class="col s12">
   <ul class="collection">
       <li ng-repeat="booking in profile.bookings" class="collection-item">
-        <b>ShopName :</b> <span>{{salonIdToSalonName(booking.salonId).name}}</span>
+        <b>Booking {{$index+1}} :</b> <span>{{booking._id}}</span><br>
+        <b>ShopName :</b> <span>{{salonToSalonId(booking.salonId).name}}</span><br>
+        <b>Mobile :</b> <span>{{salonToSalonId(booking.salonId).mobile}}</span><br>
+        <b>Email :</b> <span>{{salonToSalonId(booking.salonId).email}}</span><br>
         <span ng-if="booking.isCancel && !booking.markAsComplete" class="right new badge red" data-badge-caption="Cancelled">{{booking.cancelBy}}</span><br>
-        <span ng-if="booking.markAsComplete" class="right new badge green" data-badge-caption="Completed">Booking</span><br>
-        <br>
+        <span ng-if="booking.markAsComplete" class="right new badge green" data-badge-caption="Completed">Booking</span>
         <b>User :</b> <span>{{getUserName(booking.userId)}}</span><br>
-        <b>Services Booked : </b><p ng-repeat="obj in booking.selectedItemsObject">{{obj.serviceName}}-{{obj.subServiceName}}</p>
-        <br>
+        <b>Services Booked : </b><span ng-repeat="obj in booking.selectedItemsObject"><br><b>{{serviceIdToService(obj.serviceId).name}}</b>-{{obj.subServiceName}}</span>
         <b>Payable Amount :</b> <span>{{booking.price}}</span>
         <br>
         <b>Date :</b> <span>{{booking.bookingDate}}</span>

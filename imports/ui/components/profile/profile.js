@@ -12,6 +12,9 @@ import {
 import {
   Shops
 } from '../../../api/shops'
+import {
+  Services
+} from '../../../api/services'
 
 
 
@@ -35,7 +38,7 @@ class Profile {
       }
     });
 
-    $scope.salonIdToSalonName = function(id) {
+    $scope.salonToSalonId = function(id) {
       return Shops.findOne({
         '_id': id
       })
@@ -46,7 +49,15 @@ class Profile {
         return user.profile.name
       }
     }
+
+    $scope.serviceIdToService = function(id) {
+      if(id) {
+        return Services.findOne({'_id':id})
+      }
+    }
+
   }
+
 
   cancelBooking(id) {
     if (id) {
