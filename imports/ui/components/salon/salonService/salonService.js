@@ -33,9 +33,7 @@ class SalonService {
     this.documentNeedToUpdate = null;
 
     this.selectedItems = {
-      'service': null,
       'serviceId': null,
-      'serviceName': null,
       'subServiceName': null,
       'price': null,
       'discount': null
@@ -84,6 +82,12 @@ class SalonService {
       }
     })
 
+    $scope.serviceIdToService = function(id) {
+      if(id) {
+        return Services.findOne({'_id':id})
+      }
+    }
+
 
   }
 
@@ -105,35 +109,33 @@ class SalonService {
     Meteor.call('updateSubservice', $stateParams.serviceId, this.documentNeedToUpdate, this.selectedItems)
   }
 
+
   save() {
     $stateParams = this.stateParams
+    clear = this.clear
+    console.log(this.selectedItems);
 
-    const serviceId = JSON.parse(this.selectedItems.service)._id
-    const serviceName = JSON.parse(this.selectedItems.service).name
-
-    var object = {
-      'serviceId': serviceId,
-      'serviceName': serviceName,
-      'subServiceName': this.selectedItems.subServiceName,
-      'price': this.selectedItems.price,
-      'discount': this.selectedItems.discount
+    if(this.selectedItems.serviceId && this.selectedItems.subServiceName && this.selectedItems.price && this.selectedItems.discount) {
+      ShopServices.update({
+        '_id': $stateParams.serviceId
+      }, {
+        $addToSet: {
+          'services': this.selectedItems
+        }
+      }, function(error) {
+        if (error) {
+          console.log(error);
+        } else {
+          $("select").val("");
+          $("input").val(null);
+          $('select').material_select();
+          console.log("inserted successfully");
+        }
+      })
+    } else {
+      alert("Please fill all the fields")
     }
-    ShopServices.update({
-      '_id': $stateParams.serviceId
-    }, {
-      $addToSet: {
-        'services': object
-      }
-    }, function(error) {
-      if (error) {
-        console.log(error);
-      } else {
-        $("select").val("");
-        $("input").val(null);
-        $('select').material_select();
-        console.log("inserted successfully");
-      }
-    })
+
   }
 
   delete(object) {
@@ -144,7 +146,7 @@ class SalonService {
       $pull: {
         "services": {
           "serviceId": object.serviceId,
-          "serviceName": object.serviceName,
+          // "serviceName": object.serviceName,
           "subServiceName": object.subServiceName,
           "price": object.price,
           "discount": object.discount

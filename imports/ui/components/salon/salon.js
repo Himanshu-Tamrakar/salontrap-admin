@@ -104,12 +104,15 @@ class Salon {
 
 
     var selectedService = []
-    var selectedLocation = {}
+    var selectedLocation = {'_id':null}
 
     $("#service :selected").each(function() {
-      selectedService.push(JSON.parse($(this).val()));
+      selectedService.push({'_id': JSON.parse($(this).val())._id});
     });
-    selectedLocation = JSON.parse(document.getElementById('location-select').value);
+    // $("#service :selected").each(function() {
+    //   selectedService.push(JSON.parse($(this).val()));
+    // });
+    selectedLocation._id = JSON.parse(document.getElementById('location-select').value)._id;
 
     this.salonDetails.services = selectedService;
     this.salonDetails.location = selectedLocation

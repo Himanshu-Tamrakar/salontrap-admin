@@ -14,7 +14,7 @@
     <tbody>
       <tr ng-repeat="object in salonService.AllShopServices">
         <td>{{object.serviceId}}</td>
-        <td>{{object.serviceName}}</td>
+        <td>{{serviceIdToService(object.serviceId).name}}</td>
         <td>{{object.subServiceName}}</td>
         <td>{{object.price}}</td>
         <td>{{object.discount}}</td>
@@ -27,9 +27,9 @@
   </table>
   <!-- //Second row -->
   <div class="input-field col s12">
-    <select ng-model="salonService.selectedItems.service">
+    <select ng-model="salonService.selectedItems.serviceId">
       <option value="" disabled selected>Choose your option</option>
-      <option ng-repeat="service in salonService.shopServices" ng-init="$last && atNgRepeatFinish()" value="{{service}}">{{service.name}}</option>
+      <option ng-repeat="service in salonService.shopServices" ng-init="$last && atNgRepeatFinish()" value="{{service._id}}">{{serviceIdToService(service._id).name}}</option>
     </select>
     <label>Materialize Select</label>
   </div>
@@ -68,7 +68,7 @@
             <label class="active" for="serviceId">Service ID</label>
           </div>
           <div class="input-field col s6">
-            <input disabled ng-model="salonService.selectedItems.serviceName" placeholder="{{salonService.selectedItems.serviceName}}" id="service_name" type="text" class="validate">
+            <input disabled ng-model="salonService.selectedItems.serviceName" placeholder="{{serviceIdToService(salonService.selectedItems.serviceId).name}}" id="service_name" type="text" class="validate">
             <label class="active" for="service_name">Service Name</label>
           </div>
           <div class="input-field col s12">
