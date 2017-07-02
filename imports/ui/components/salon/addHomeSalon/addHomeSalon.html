@@ -1,0 +1,30 @@
+<h4 class="center">Enter Home Salon Details</h4>
+<div class="row">
+  <form class="col s12">
+    <div class="input-field col s12">
+      <input ng-model="addHomeSalon.homeSalonDetails.name" placeholder="Enter Salon Name" id="salon_name" type="text" class="validate">
+      <label class="active" for="salon_name">Enter The Name Of The Salon</label>
+    </div>
+    <div class="input-field col s12">
+      <textarea ng-model="addHomeSalon.homeSalonDetails.images" id="images" class="materialize-textarea"></textarea>
+      <label for="images">Enter Image URL coma saparated</label>
+    </div>
+    <div class="input-field col s12">
+      <select multiple ng-model="addHomeSalon.homeSalonDetails.services" id="service">
+        <option disabled selected>Choose Services</option>
+        <option ng-init="$last && atNgRepeatFinish()" ng-repeat="service in addHomeSalon.allServices" value="{{service._id}}">{{service.name}}</option>
+      </select>
+    </div>
+    <div class="input-field col s12">
+      <input ng-model="addHomeSalon.homeSalonDetails.mobile" placeholder="Enter 10 digit phone number" id="salon_owner_mobile" type="tel" class="validate">
+      <label class="active" for="salon_owner_mobile">Enter The Salon Contact Person</label>
+    </div>
+    <div class="input-field col s12">
+      <input ng-model="addHomeSalon.homeSalonDetails.email" placeholder="Enter Email" id="salon_owner_email" type="email" class="validate">
+      <label class="active" for="salon_owner_email" data-error="wrong" data-success="right">Enter The Salon Contact Email</label>
+    </div>
+    <div ng-click="addHomeSalon.insert()" class="center submit-container move-submit-down">
+        <input style="margin-top:20px;width:94%" type="submit" name="commit" value="Insert" class="btn btn-save">
+    </div>
+  </form>
+</div>

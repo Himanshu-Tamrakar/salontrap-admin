@@ -15,6 +15,10 @@ import {
 import {
   name as Salon
 } from '../salon/salon'
+// import {
+//   name as HomeSalon
+// } from '../homeSalon/homeSalon'
+
 
 
 
@@ -44,6 +48,7 @@ export default angular.module(name, [
   Location,
   Service,
   Salon
+  // HomeSalon
 ]).component(name, {
   template,
   controllerAs: name,

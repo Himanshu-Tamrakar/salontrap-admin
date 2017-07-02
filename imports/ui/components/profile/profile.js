@@ -27,6 +27,12 @@ class Profile {
     this.scope = $scope;
     this.state = $state;
 
+    $timeout(function() {
+      $(document).ready(function() {
+        $('ul.tabs').tabs();
+      });
+    }, 10);
+
     this.helpers({
       user() {
         if (Meteor.userId()) {
@@ -35,24 +41,31 @@ class Profile {
       },
       bookings() {
         return Bookings.find({})
+      },
+      allusers() {
+        return Meteor.users.find({})
       }
     });
 
-    $scope.salonToSalonId = function(id) {
+    $scope.salonIdToSalon = function(id) {
       return Shops.findOne({
         '_id': id
       })
     }
     $scope.getUserName = function(userId) {
-      const user = Meteor.users.findOne({'_id':userId})
-      if(user && user.profile) {
+      const user = Meteor.users.findOne({
+        '_id': userId
+      })
+      if (user && user.profile) {
         return user.profile.name
       }
     }
 
     $scope.serviceIdToService = function(id) {
-      if(id) {
-        return Services.findOne({'_id':id})
+      if (id) {
+        return Services.findOne({
+          '_id': id
+        })
       }
     }
 

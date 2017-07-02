@@ -1,220 +1,81 @@
-<!-- ui-sref="salonDetails({salonId: shop._id, serviceId:shop.serviceId})" -->
-<table class="bordered responsive-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <!-- <th>ServiceId</th> -->
-      <th>Type</th>
-      <th>Location</th>
-      <!-- <th>Images</th> -->
-      <!-- <th>openingHours</th> -->
-      <!-- <th>Amenities</th> -->
-      <!-- <th>Price</th> -->
-      <!-- <th>PaymentModes</th> -->
-      <!-- <th>Services</th> -->
-      <th>Operation</yh>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr ng-repeat="object in salon.allSalons">
-      <td>{{object.name}}</td>
-      <!-- <td>{{object.serviceId}}</td> -->
-      <td>{{object.type}}</td>
-      <td>{{object.location.name}}</td>
-      <!-- <td>{{object.name}}</td> -->
-      <!-- <td>{{object.openingHours}}</td> -->
-      <!-- <td>
-        <div class="input-field">
-          <select>
-            <option ng-repeat="amenitie in object.amenities">{{amenitie}}</option>
-          </select>
-        </div>
-      </td> -->
-      <!-- <td>{{object.price}}</td> -->
-      <!-- <td>
-        <div class="input-field">
-          <select>
-            <option ng-repeat="paymode in object.paymentModes">{{paymode}}</option>
-          </select>
-        </div>
-      </td> -->
-      <!-- <td>
-        <div class="input-field">
-          <select>
-            <option ng-repeat="service in object.services">{{service.name}}</option>
-          </select>
-        </div>
-      </td> -->
-      <td>
-        <a ui-sref="salonService({ 'shopId':object._id, 'serviceId':object.serviceId})" class="right" style="margin-right:10px;"><i class="material-icons">playlist_add</i></a>
-        <a class="right" style="margin-right:10px;" ng-click="salon.initialize(object)" href="#update-shop"><i class="material-icons">mode_edit</i></a>
-        <a class="right" style="margin-right:10px;"><i ng-click="salon.delete(object._id, object.serviceId)" class="material-icons">delete_forever</i></a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<div class="container">
-  <a class="" href="#add-shop"><i class="material-icons medium">add_circle</i></a>
+<div class="row">
+  <div class="col s12">
+    <ul class="tabs">
+      <li class="tab col s3"><a href="#salons">Salons</a></li>
+      <li class="tab col s3"><a href="#home-salon">Home Salon</a></li>
+    </ul>
+  </div>
+  <!-- //First Tab -->
+  <div id="salons" class="col s12">
+    <table class="bordered responsive-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>IsHomeSalon</th>
+          <th>Location</th>
+          <th>Operation</yh>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="object in salon.allSalons | filter:{ isHomeSalon: false }">
+          <td>{{object.name}}</td>
+          <td>{{object.type}}</td>
+          <td>{{object.isHomeSalon}}</td>
+          <td>{{locationIdToLocation(object.location._id).name}}</td>
+          <td>
+            <a ui-sref="salonService({ 'shopId':object._id, 'serviceId':object.serviceId})"><i class="material-icons">playlist_add</i></a>
+            <!-- <a ng-click="salon.initialize(object)" href="#update-shop"><i class="material-icons">mode_edit</i></a> -->
+            <a><i ng-click="salon.delete(object._id, object.serviceId)" class="material-icons">delete_forever</i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="container">
+      <a class="" href="#add-shop"><i class="material-icons medium">add_circle</i></a>
+    </div>
+  </div>
+  <!-- //Second Tabs -->
+  <div id="home-salon" class="col s12">
+    <table class="bordered responsive-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>IsHomeSalon</th>
+          <th>Operation</yh>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="object in salon.allSalons | filter:{ isHomeSalon: true }">
+          <td>{{object.name}}</td>
+          <td>{{object.isHomeSalon}}</td>
+          <td>
+            <a ui-sref="salonService({ 'shopId':object._id, 'serviceId':object.serviceId})"><i class="material-icons">playlist_add</i></a>
+            <!-- <a ng-click="salon.initialize(object)" href="#update-shop"><i class="material-icons">mode_edit</i></a> -->
+            <a><i ng-click="salon.delete(object._id, object.serviceId)" class="material-icons">delete_forever</i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div ng-show="(salon.allSalons | filter:{ isHomeSalon: true }).length == 0" class="container">
+      <a class="" href="#add-home-shop"><i class="material-icons medium">add_circle</i></a>
+    </div>
+  </div>
 </div>
+
+
 <!-- Modal Structure To add Shop Details-->
 <div id="add-shop" class="modal">
   <div class="modal-content">
     <h4 class="center">Enter Shop Details</h4>
-    <div class="row">
-      <form class="col s12">
-        <div class="input-field col s6">
-          <input ng-model="salon.salonDetails.name" placeholder="Enter Salon Name" id="salon_name" type="text" class="validate">
-          <label class="active" for="salon_name">Enter The Name Of The Salon</label>
-        </div>
-        <div class="input-field col s6">
-          <select ng-model="salon.salonDetails.type">
-                <option value="" disabled selected>Choose your option</option>
-                <option value="UNISEX">UNISEX</option>
-                <option value="MEN ONLY">MEN ONLY</option>
-                <option value="WOMEN ONLY">WOMEN ONLY</option>
-          </select>
-        </div>
-        <div class="input-field col s12">
-          <textarea ng-model="salon.salonDetails.images" id="images" class="materialize-textarea"></textarea>
-          <label for="images">Enter Image URL coma colan saparated</label>
-        </div>
-        <div class="input-field col s6">
-          <select ng-model="salon.salonDetails.location" id="location-select">
-            <option value="" disabled selected>Choose A Location</option>
-            <option ng-repeat="location in salon.allLocations" value="{{location}}">{{location.name}}</option>
-          </select>
-        </div>
-        <div class="input-field col s6">
-          <input ng-model="salon.salonDetails.openingHours" placeholder="MON-FRI 11AM-8PM" id="salon_openingHours" type="text" class="validate">
-          <label class="active" for="salon_openingHours">Enter The Opening Date And Time</label>
-        </div>
-        <div class="input-field col s6">
-          <select multiple ng-model="salon.salonDetails.amenities">
-            <option value="" disabled selected>Choose Amenities</option>
-            <option value="TV">TV</option>
-            <option value="AC">AC</option>
-            <option value="WIFI">WIFI</option>
-            <option value="PARKING">PARKING</option>
-          </select>
-        </div>
-        <div class="input-field col s6">
-          <select ng-model="salon.salonDetails.price">
-            <option value="" disabled selected>Choose Minimum Price</option>
-            <option value="1">Single Digit</option>
-            <option value="2">Double Digit</option>
-            <option value="3">Triple Digit</option>
-            <option value="4">Four Digit</option>
-            <option value="4*">More Than Four</option>
-          </select>
-        </div>
-        <div class="input-field col s6">
-          <select multiple ng-model="salon.salonDetails.paymentModes">
-            <option value="" disabled selected>Choose Payment Option</option>
-            <option value="CARD">Card</option>
-            <option value="CASH">Cash</option>
-          </select>
-        </div>
-        <div class="input-field col s6">
-          <select multiple ng-model="salon.salonDetails.services" id="service">
-            <option disabled selected>Choose Services</option>
-            <option ng-init="$last && atNgRepeatFinish()" ng-repeat="service in salon.allServices" value="{{service}}">{{service.name}}</option>
-          </select>
-        </div>
-        <div class="input-field col s6">
-          <input ng-model="salon.salonDetails.mobile" placeholder="Enter 10 digit phone number" id="salon_owner_mobile" type="tel" class="validate">
-          <label class="active" for="salon_owner_mobile">Enter The Salon Contact Person</label>
-        </div>
-        <div class="input-field col s6">
-          <input ng-model="salon.salonDetails.email" placeholder="Enter Email" id="salon_owner_email" type="email" class="validate">
-          <label class="active" for="salon_owner_email" data-error="wrong" data-success="right">Enter The Salon Contact Email</label>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <a ng-click="salon.insert()" id="download-button" class="btn-large orange">Insert Shop</a>
+    <add-salon></add-salon>
   </div>
 </div>
 
-<!-- Modal Structure To Update Shop Details-->
-<div id="update-shop" class="modal">
+<!-- Modal Structure To add HOme Shop Details-->
+<div id="add-home-shop" class="modal">
   <div class="modal-content">
     <h4 class="center">Enter Shop Details</h4>
-    <div class="row">
-      <form class="col s12">
-        <div class="input-field col s6">
-          <input ng-model="salon.salonDetails.name" placeholder="Enter Salon Name" id="salon_name" type="text" class="validate">
-          <label class="active" for="salon_name">Enter The Name Of The Salon</label>
-        </div>
-        <div class="input-field col s6">
-          <select ng-model="salon.salonDetails.type">
-                <option disabled selected>Choose your option</option>
-                <option value="UNISEX">UNISEX</option>
-                <option value="MEN ONLY">MEN ONLY</option>
-                <option value="WOMEN ONLY">WOMEN ONLY</option>
-          </select>
-        </div>
-        <div class="input-field col s12">
-          <textarea ng-model="salon.salonDetails.images" id="images" class="materialize-textarea"></textarea>
-          <label for="images">Enter Image URL coma colan saparated</label>
-        </div>
-        <div class="input-field col s6">
-          <select ng-model="salon.salonDetails.location" id="location-select">
-            <option disabled selected>Choose A Location</option>
-            <option ng-repeat="location in salon.allLocations" value="{{location}}">{{location.name}}</option>
-          </select>
-        </div>
-        <div class="input-field col s6">
-          <input ng-model="salon.salonDetails.openingHours" placeholder="MON-FRI 11AM-8PM" id="salon_openingHours" type="text" class="validate">
-          <label class="active" for="salon_openingHours">Enter The Opening Date And Time</label>
-        </div>
-        <div class="input-field col s6">
-          <select multiple ng-model="salon.salonDetails.amenities">
-            <option disabled selected>Choose Amenities</option>
-            <option value="TV">TV</option>
-            <option value="AC">AC</option>
-            <option value="WIFI">WIFI</option>
-            <option value="PARKING">PARKING</option>
-          </select>
-        </div>
-        <div class="input-field col s6">
-          <select ng-model="salon.salonDetails.price">
-            <option disabled selected>Choose Minimum Price</option>
-            <option value="1">Single Digit</option>
-            <option value="2">Double Digit</option>
-            <option value="3">Triple Digit</option>
-            <option value="4">Four Digit</option>
-            <option value="4*">More Than Four</option>
-          </select>
-        </div>
-        <div class="input-field col s6">
-          <select multiple ng-model="salon.salonDetails.paymentModes">
-            <option disabled selected>Choose Payment Option</option>
-            <option value="CARD">Card</option>
-            <option value="CASH">Cash</option>
-          </select>
-        </div>
-        <div class="input-field col s6">
-          <select multiple ng-model="salon.salonDetails.services" id="service">
-            <option disabled selected>Choose Services</option>
-            <option ng-init="$last && atNgRepeatFinish()" ng-repeat="service in salon.allServices" value="{{service}}">{{service.name}}</option>
-          </select>
-        </div>
-        <div class="input-field col s6">
-          <input ng-model="salon.salonDetails.mobile" placeholder="Enter 10 digit phone number" id="salon_owner_mobile" type="tel" class="validate">
-          <label class="active" for="salon_owner_mobile">Enter The Salon Contact Person</label>
-        </div>
-        <div class="input-field col s6">
-          <input ng-model="salon.salonDetails.email" placeholder="Enter Email" id="salon_owner_email" type="email" class="validate">
-          <label class="active" for="salon_owner_email" data-error="wrong" data-success="right">Enter The Salon Contact Email</label>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <a ng-click="salon.update()" id="download-button" class="btn-large orange">Insert Shop</a>
+    <add-home-salon></add-home-salon>
   </div>
 </div>

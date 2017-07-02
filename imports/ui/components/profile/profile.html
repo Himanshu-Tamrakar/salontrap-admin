@@ -1,29 +1,61 @@
-
-<div id="test2" class="col s12">
-  <ul class="collection">
-      <li ng-repeat="booking in profile.bookings" class="collection-item">
-        <b>Booking {{$index+1}} :</b> <span>{{booking._id}}</span><br>
-        <b>ShopName :</b> <span>{{salonToSalonId(booking.salonId).name}}</span><br>
-        <b>Mobile :</b> <span>{{salonToSalonId(booking.salonId).mobile}}</span><br>
-        <b>Email :</b> <span>{{salonToSalonId(booking.salonId).email}}</span><br>
-        <span ng-if="booking.isCancel && !booking.markAsComplete" class="right new badge red" data-badge-caption="Cancelled">{{booking.cancelBy}}</span><br>
-        <span ng-if="booking.markAsComplete" class="right new badge green" data-badge-caption="Completed">Booking</span>
-        <b>User :</b> <span>{{getUserName(booking.userId)}}</span><br>
-        <b>Services Booked : </b><span ng-repeat="obj in booking.selectedItemsObject"><br><b>{{serviceIdToService(obj.serviceId).name}}</b>-{{obj.subServiceName}}</span>
-        <b>Payable Amount :</b> <span>{{booking.price}}</span>
-        <br>
-        <b>Date :</b> <span>{{booking.bookingDate}}</span>
-        <br>
-        <b>Time :</b> <span>{{booking.bookingTime}}</span>
-        <div class="row">
-          <div ng-if="!booking.markAsComplete" href="" class="col s6 right">
-            <a ng-if="!booking.isCancel" ng-click="profile.cancelBooking(booking._id)" id="download-button" class="btn right waves-effect waves-light">Cancel Booking</a>
+<div class="row">
+  <div class="col s12">
+    <ul class="tabs">
+      <li class="tab col s6"><a href="#bookings">Bookings</a></li>
+      <li class="tab col s5"><a href="#users">Users</a></li>
+    </ul>
+  </div>
+  <!-- //First Tabs -->
+  <div id="bookings" class="col s12">
+    <div id="test2" class="">
+      <ul class="collection">
+        <li ng-repeat="booking in profile.bookings" class="collection-item">
+          <b>Booking {{$index+1}} :</b> <span>{{booking._id}}</span><br>
+          <b>ShopName :</b> <span>{{salonIdToSalon(booking.salonId).name}}</span><br>
+          <b>Mobile :</b> <span>{{salonIdToSalon(booking.salonId).mobile}}</span><br>
+          <b>Email :</b> <span>{{salonIdToSalon(booking.salonId).email}}</span><br>
+          <span ng-if="booking.isCancel && !booking.markAsComplete" class="right new badge red" data-badge-caption="Cancelled">{{booking.cancelBy}}</span><br>
+          <span ng-if="booking.markAsComplete" class="right new badge green" data-badge-caption="Completed">Booking</span>
+          <b>User :</b> <span>{{getUserName(booking.userId)}}</span><br>
+          <b>Services Booked : </b><span ng-repeat="obj in booking.selectedItemsObject"><br><b>{{serviceIdToService(obj.serviceId).name}}</b>-{{obj.subServiceName}}</span><br>
+          <b>Payable Amount :</b> <span>{{booking.price}}</span>
+          <br>
+          <b>Date :</b> <span>{{booking.bookingDate}}</span>
+          <br>
+          <b>Time :</b> <span>{{booking.bookingTime}}</span>
+          <div class="row">
+            <div ng-if="!booking.markAsComplete" href="" class="col s6 right">
+              <a ng-if="!booking.isCancel" ng-click="profile.cancelBooking(booking._id)" id="download-button" class="btn right waves-effect waves-light">Cancel Booking</a>
+            </div>
+            <div ng-if="!booking.markAsComplete" class="col s6 left">
+              <a ng-if="!booking.isCancel" ng-click="profile.markAsComplete(booking._id)" id="download-button" class="btn waves-effect waves-light">Mark Booking As Completed</a>
+            </div>
           </div>
-           <div ng-if="!booking.markAsComplete" class="col s6 left">
-            <a ng-if="!booking.isCancel" ng-click="profile.markAsComplete(booking._id)" id="download-button" class="btn waves-effect waves-light">Mark Booking As Completed</a>
-          </div>
-        </div>
 
-      </li>
-  </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- //Second Tabs -->
+  <div id="users" class="col s12">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Email</th>
+          <th>Mobile Number</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="user in profile.allusers">
+          <td>{{user.profile.name}}</td>
+          <td>{{user.profile.gender}}</td>
+          <td>{{user.profile.email}}</td>
+          <td>{{user.profile.phoneNumber}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
