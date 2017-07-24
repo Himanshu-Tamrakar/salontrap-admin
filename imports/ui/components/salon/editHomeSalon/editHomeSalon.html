@@ -1,0 +1,24 @@
+<div class="row">
+  <form class="col s12">
+    <div class="input-field col s12">
+      <input ng-model="editHomeSalon.homeSalonDetails.name" id="salon_name" type="text" class="validate">
+    </div>
+    <div class="input-field col s12">
+      <textarea ng-model="editHomeSalon.homeSalonDetails.images" id="images" class="materialize-textarea"></textarea>
+    </div>
+    <div class="input-field col s12">
+      <select multiple ng-model="editHomeSalon.homeSalonDetails.services" id="service">
+        <option ng-init="$last && atNgRepeatFinish()" ng-repeat="service in editHomeSalon.allServices" value="{{service._id}}">{{service.name}}</option>
+      </select>
+    </div>
+    <div class="input-field col s12">
+      <input ng-model="editHomeSalon.homeSalonDetails.mobile" id="salon_owner_mobile" type="tel" class="validate">
+    </div>
+    <div class="input-field col s12">
+      <input ng-model="editHomeSalon.homeSalonDetails.email" id="salon_owner_email" type="email" class="validate">
+    </div>
+    <div ng-click="editHomeSalon.update()" class="center submit-container move-submit-down">
+        <input style="margin-top:20px;" type="submit" name="commit" value="Insert" class="btn btn-save">
+    </div>
+  </form>
+</div>

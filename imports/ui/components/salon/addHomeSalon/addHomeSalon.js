@@ -67,11 +67,6 @@ class AddHomeSalon {
     }, 100);
 
     this.helpers({
-      allHomeSalon() {
-        return Shops.find({
-          'isHomeSalon': true
-        });
-      },
       allServices() {
         return Services.find({})
       }
@@ -122,7 +117,11 @@ class AddHomeSalon {
                   }
                 }, function(error) {
                   if (!error) {
-
+                    $("select").val("");
+                    $("input").val(null);
+                    $("textarea").val(null);
+                    $('input#input_text, textarea#textarea1').characterCounter();
+                    $('select').material_select();
                   }
                 })
               }

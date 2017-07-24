@@ -25,7 +25,7 @@
           <td>{{locationIdToLocation(object.location._id).name}}</td>
           <td>
             <a ui-sref="salonService({ 'shopId':object._id, 'serviceId':object.serviceId})"><i class="material-icons">playlist_add</i></a>
-            <!-- <a ng-click="salon.initialize(object)" href="#update-shop"><i class="material-icons">mode_edit</i></a> -->
+            <a ui-sref="editSalon({'salonId': object._id})"><i class="material-icons">mode_edit</i></a>
             <a><i ng-click="salon.delete(object._id, object.serviceId)" class="material-icons">delete_forever</i></a>
           </td>
         </tr>
@@ -51,7 +51,7 @@
           <td>{{object.isHomeSalon}}</td>
           <td>
             <a ui-sref="salonService({ 'shopId':object._id, 'serviceId':object.serviceId})"><i class="material-icons">playlist_add</i></a>
-            <!-- <a ng-click="salon.initialize(object)" href="#update-shop"><i class="material-icons">mode_edit</i></a> -->
+            <a ui-sref="editHomeSalon({'salonId': object._id})"><i class="material-icons">mode_edit</i></a>
             <a><i ng-click="salon.delete(object._id, object.serviceId)" class="material-icons">delete_forever</i></a>
           </td>
         </tr>
@@ -75,7 +75,7 @@
 <!-- Modal Structure To add HOme Shop Details-->
 <div id="add-home-shop" class="modal">
   <div class="modal-content">
-    <h4 class="center">Enter Shop Details</h4>
+    <h4 class="center">Enter Home Salon Details</h4>
     <add-home-salon></add-home-salon>
   </div>
 </div>

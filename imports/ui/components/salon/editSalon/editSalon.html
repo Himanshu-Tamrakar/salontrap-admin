@@ -1,0 +1,72 @@
+<span class="center">Edit Salon Details</span>
+<div class="container row">
+  <form class="col s12">
+    <div class="input-field col s6">
+      <input ng-model="editSalon.salonDetails.name" id="salon_name" type="text" class="validate">
+    </div>
+    <div class="input-field col s6">
+      <select ng-model="editSalon.salonDetails.type">
+            <!-- <option value="" disabled selected>{{editSalon.salon.type}}</option> -->
+            <option value="UNISEX">UNISEX</option>
+            <option value="MEN ONLY">MEN ONLY</option>
+            <option value="WOMEN ONLY">WOMEN ONLY</option>
+      </select>
+    </div>
+    <div class="input-field col s12">
+      <textarea ng-model="editSalon.salonDetails.images" id="images" class="materialize-textarea"></textarea>
+    </div>
+    <div class="input-field col s6">
+      <select ng-model="editSalon.salonDetails.location._id" id="location-select">
+        <!-- <option value="" disabled selected>{{locationIdToLocation(editSalon.salon.location._id).name}}</option> -->
+        <option ng-repeat="location in editSalon.allLocations" value="{{location._id}}">{{location.name}}</option>
+      </select>
+    </div>
+    <div class="input-field col s6">
+      <input ng-model="editSalon.salonDetails.openingHours" id="salon_openingHours" type="text" class="validate">
+      <!-- <label class="active" for="salon_openingHours">Enter The Opening Date And Time</label> -->
+    </div>
+    <div class="input-field col s6">
+      <select multiple ng-model="editSalon.salonDetails.amenities">
+        <!-- <option value="" disabled selected>{{editSalon.salon.amenities}}</option> -->
+        <option value="TV">TV</option>
+        <option value="AC">AC</option>
+        <option value="WIFI">WIFI</option>
+        <option value="PARKING">PARKING</option>
+      </select>
+    </div>
+    <div class="input-field col s6">
+      <select ng-model="editSalon.salonDetails.price">
+        <!-- <option value="" disabled selected>{{editSalon.salon.price}}</option> -->
+        <option value="1">Single Digit</option>
+        <option value="2">Double Digit</option>
+        <option value="3">Triple Digit</option>
+        <option value="4">Four Digit</option>
+        <option value="4*">More Than Four</option>
+      </select>
+    </div>
+    <div class="input-field col s6">
+      <select multiple ng-model="editSalon.salonDetails.paymentModes">
+        <!-- <option value="" disabled selected>{{editSalon.salon.paymentModes}}</option> -->
+        <option value="CARD">Card</option>
+        <option value="CASH">Cash</option>
+      </select>
+    </div>
+    <div class="input-field col s6">
+      <select multiple ng-model="editSalon.salonDetails.services" id="service">
+        <!-- <option disabled selected>Please choose Services</option> -->
+        <option ng-repeat="service in editSalon.allServices" value="{{service._id}}">{{service.name}}</option>
+      </select>
+    </div>
+    <div class="input-field col s6">
+      <input ng-model="editSalon.salonDetails.mobile" id="salon_owner_mobile" type="tel" class="validate">
+      <!-- <label class="active" for="salon_owner_mobile">Enter The Salon Contact Person</label> -->
+    </div>
+    <div class="input-field col s6">
+      <input ng-model="editSalon.salonDetails.email" id="salon_owner_email" type="email" class="validate">
+      <!-- <label class="active" for="salon_owner_email" data-error="wrong" data-success="right">Enter The Salon Contact Email</label> -->
+    </div>
+  </form>
+  <div ng-click="editSalon.update()" class="center submit-container move-submit-down">
+      <input style="margin-top:20px;" type="submit" name="commit" value="Update" class="btn btn-save">
+  </div>
+</div>

@@ -27,7 +27,12 @@ import {
 import {
   name as AddHomeSalon
 } from './addHomeSalon/addHomeSalon'
-
+import {
+  name as EditSalon
+} from './editSalon/editSalon'
+import {
+  name as EditHomeSalon
+} from './editHomeSalon/editHomeSalon'
 
 
 class Salon {
@@ -41,6 +46,26 @@ class Salon {
     this.state = $state;
 
     this.shopToBeUpdate = null;
+
+    this.savedSalonDetails = {
+      'name': null,
+      'serviceId': null,
+      'type': null,
+      'location': {
+        '_id': null
+      },
+      'images': null,
+      'openingHours': null,
+      'amenities': [],
+      'price': null,
+      'paymentModes': [],
+      'createdAt': null,
+      'updatedAt': null,
+      'services': [],
+      'mobile': null,
+      'email': null,
+      'isHomeSalon':false
+    }
 
     $scope.locationIdToLocation = function(id) {
       if (id) {
@@ -67,6 +92,7 @@ class Salon {
     })
 
   }
+
 
   delete(shopId, serviceId) {
     if (shopId, serviceId) {
@@ -101,7 +127,9 @@ export default angular.module(name, [
   ngMaterial,
   SalonService,
   AddSalon,
-  AddHomeSalon
+  AddHomeSalon,
+  EditSalon,
+  EditHomeSalon
 ]).component(name, {
   template,
   controllerAs: name,
