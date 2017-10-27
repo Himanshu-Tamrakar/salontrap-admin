@@ -8,7 +8,7 @@ Meteor.startup(function () {
         console.log('no user found....creating user');
         var options = {
             username: 'admin',
-            password: 'iDLxsteh2As9MmikX'
+            password: 'iDLxstesdjkfhskdjfhsdkfh2As9MmikX'
         };
         Accounts.createUser(options);
     }else{
